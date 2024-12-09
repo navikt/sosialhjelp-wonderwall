@@ -16,8 +16,8 @@ spec:
         - host: test.idporten.no
     inbound:
       rules:
-        - application: sosialhjelp-soknad-wonderwall
-        - application: sosialhjelp-innsyn-wonderwall
+        - application: wonderwall-soknad
+        - application: wonderwall-innsyn
   resources:
     limits:
       cpu: "2"
