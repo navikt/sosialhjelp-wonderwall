@@ -13,11 +13,7 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: test.idporten.no
-    inbound:
-      rules:
-        - application: wonderwall-innsyn
-        - application: wonderwall-soknad
+        - host: idporten.no
   resources:
     limits:
       cpu: "2"

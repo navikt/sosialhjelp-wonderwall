@@ -14,10 +14,6 @@ spec:
     outbound:
       external:
         - host: test.idporten.no
-    inbound:
-      rules:
-        - application: wonderwall-soknad
-        - application: wonderwall-innsyn
   resources:
     limits:
       cpu: "2"
