@@ -68,7 +68,7 @@ spec:
     - name: WONDERWALL_SESSION_REFRESH_AUTO
       value: "false"
     - name: WONDERWALL_SSO_DOMAIN
-      value: ekstern.dev.nav.no
+      value: dev.nav.no
     - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
       value: no.sosialhjelp.wonderwall.session
     - name: WONDERWALL_SSO_SERVER_DEFAULT_REDIRECT_URL
