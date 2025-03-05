@@ -45,6 +45,8 @@ spec:
       value: ks:fiks,husbanken:minbostotte
     - name: WONDERWALL_OPENID_POST_LOGOUT_REDIRECT_URI
       value: https://login.ekstern.dev.nav.no/oauth2/logout
+    - name: WONDERWALL_OPENID_RESOURCE_INDICATOR
+      value: https://nav.no/sosialhjelp
     - name: WONDERWALL_INGRESS
       value: https://www.ekstern.dev.nav.no/sosialhjelp/wonderwall
     - name: WONDERWALL_BIND_ADDRESS
