@@ -24,9 +24,6 @@ spec:
   valkey:
     - access: readwrite
       instance: wonderwall
-  redis:
-    - access: readwrite
-      instance: wonderwall
   liveness:
     initialDelay: 20
     path: /sosialhjelp/wonderwall/oauth2/ping
