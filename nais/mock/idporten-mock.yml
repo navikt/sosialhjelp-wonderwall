@@ -12,7 +12,7 @@ spec:
     - "https://digisos.ekstern.dev.nav.no/sosialhjelp/idporten-mock"
   resources:
     limits:
-      cpu: 1
+      cpu: "1"
       memory: 256Mi
     requests:
       cpu: "20m"
@@ -27,6 +27,7 @@ spec:
     min: 1
     max: 2
   env:
-    JSON_CONFIG:
-      "interactiveLogin": true
-      "loginPagePath": "/app/login.html"
+    - name: JSON_CONFIG
+      value: |
+        "interactiveLogin": true
+        "loginPagePath": "/app/login.html"

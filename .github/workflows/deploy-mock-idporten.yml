@@ -1,5 +1,5 @@
 name: 'Build Image and Deploy to Dev'
-run-name: Deploying ${{ github.ref_name }} to ${{ github.event.inputs.config-file-name }}
+run-name: Deploying ${{ github.ref_name }} to dev
 
 on:
   workflow_dispatch:
