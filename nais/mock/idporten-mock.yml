@@ -1,0 +1,32 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sosialhjelp-idporten-mock
+  namespace: teamdigisos
+  labels:
+    team: teamdigisos
+spec:
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/idporten-mock"
+  resources:
+    limits:
+      cpu: 1
+      memory: 256Mi
+    requests:
+      cpu: "20m"
+      memory: 50Mi
+  liveness:
+    initialDelay: 20
+    path: /sosialhjelp/idporten-mock/isalive
+  readiness:
+    initialDelay: 20
+    path: /sosialhjelp/idporten-mock/isalive
+  replicas:
+    min: 1
+    max: 2
+  env:
+    JSON_CONFIG:
+      "interactiveLogin": true
+      "loginPagePath": "/app/login.html"

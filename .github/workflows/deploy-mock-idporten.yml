@@ -1,0 +1,44 @@
+name: 'Build Image and Deploy to Dev'
+run-name: Deploying ${{ github.ref_name }} to ${{ github.event.inputs.config-file-name }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+jobs:
+  build-image:
+    name: 'Build Image for Deploy'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and push docker image to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: teamdigisos
+          docker_context: './nais/mock/'
+
+  deploy-gcp:
+    name: 'Deploy to development'
+    permissions:
+      id-token: write
+      contents: read
+    needs: build-image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Deploy til dev'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/mock/idporten-mock.yaml
+          CLUSTER: dev-gcp
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true
+          VAR: image=${{ needs.build-image.outputs.image }}
