@@ -37,7 +37,7 @@ jobs:
       - name: 'Deploy til dev'
         uses: nais/deploy/actions/deploy@v2
         env:
-          RESOURCE: nais/mock/idporten-mock.yaml
+          RESOURCE: nais/mock/idporten-mock.yml
           CLUSTER: dev-gcp
           REF: ${{ github.sha }}
           PRINT_PAYLOAD: true
