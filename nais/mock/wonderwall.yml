@@ -43,7 +43,7 @@ spec:
     - name: WONDERWALL_OPENID_CLIENT_SECRET
       value: not-so-secret
     - name: WONDERWALL_OPENID_WELL_KNOWN_URL
-      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/idporten-mock/default/.well-known/openid-configuration
+      value: https://sosiauth2.ekstern.dev.nav.no/default/.well-known/openid-configuration
     - name: WONDERWALL_SSO_ENABLED
       value: "true"
     - name: WONDERWALL_OPENID_SCOPES

@@ -9,7 +9,7 @@ spec:
   image: {{ image }}
   port: 8080
   ingresses:
-    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/idporten-mock"
+    - "https://sosiauth2.ekstern.dev.nav.no"
   accessPolicy:
     inbound:
       rules:
