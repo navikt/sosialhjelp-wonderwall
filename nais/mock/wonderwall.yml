@@ -1,0 +1,78 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sosialhjelp-wonderwall-mock
+  namespace: teamdigisos
+  labels:
+    team: teamdigisos
+spec:
+  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
+  port: 8080
+  ingresses:
+    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/wonderwall"
+  resources:
+    limits:
+      cpu: "2"
+      memory: 256Mi
+    requests:
+      cpu: "20m"
+      memory: 50Mi
+  accessPolicy:
+    outbound:
+      rules:
+        - application: sosialhjelp-idporten-mock
+      external:
+        - host: digisos.ekstern.dev.nav.no
+  valkey:
+    - access: readwrite
+      instance: wonderwall
+  liveness:
+    initialDelay: 20
+    path: /sosialhjelp/wonderwall/oauth2/ping
+  readiness:
+    initialDelay: 20
+    path: /sosialhjelp/wonderwall/oauth2/ping
+  replicas:
+    min: 1
+    max: 1
+  envFrom:
+    - secret: wonderwall-redis
+  env:
+    - name: WONDERWALL_OPENID_CLIENT_ID
+      value: default
+    - name: WONDERWALL_OPENID_CLIENT_SECRET
+      value: not-so-secret
+    - name: WONDERWALL_OPENID_WELL_KNOWN_URL
+      value: https://sosiauth2.ekstern.dev.nav.no/default/.well-known/openid-configuration
+    - name: WONDERWALL_SSO_ENABLED
+      value: "true"
+    - name: WONDERWALL_OPENID_SCOPES
+      value: ks:fiks,husbanken:minbostotte
+    - name: WONDERWALL_INGRESS
+      value: https://digisos.ekstern.dev.nav.no/sosialhjelp/wonderwall
+    - name: WONDERWALL_BIND_ADDRESS
+      value: 0.0.0.0:8080
+    - name: WONDERWALL_METRICS_BIND_ADDRESS
+      value: 0.0.0.0:7565
+    - name: WONDERWALL_SHUTDOWN_GRACEFUL_PERIOD
+      value: 30s
+    - name: WONDERWALL_SHUTDOWN_WAIT_BEFORE_PERIOD
+      value: 7s
+    - name: WONDERWALL_REDIS_URI
+      value: $(REDIS_URI_WONDERWALL)
+    - name: WONDERWALL_REDIS_USERNAME
+      value: $(REDIS_USERNAME_WONDERWALL)
+    - name: WONDERWALL_REDIS_PASSWORD
+      value: $(REDIS_PASSWORD_WONDERWALL)
+    - name: WONDERWALL_SESSION_MAX_LIFETIME
+      value: 59m
+    - name: WONDERWALL_SESSION_REFRESH_AUTO
+      value: "false"
+    - name: WONDERWALL_LOG_LEVEL
+      value: "debug"
+    - name: WONDERWALL_SSO_DOMAIN
+      value: dev.nav.no
+    - name: WONDERWALL_SSO_SESSION_COOKIE_NAME
+      value: no.sosialhjelp.mock.wonderwall.session
+    - name: WONDERWALL_SSO_SERVER_DEFAULT_REDIRECT_URL
+      value: https://www.ekstern.dev.nav.no/okonomisk-sosialhjelp

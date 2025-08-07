@@ -9,7 +9,17 @@ spec:
   image: {{ image }}
   port: 8080
   ingresses:
-    - "https://digisos.ekstern.dev.nav.no/sosialhjelp/idporten-mock"
+    - "https://sosiauth2.ekstern.dev.nav.no"
+  accessPolicy:
+    inbound:
+      rules:
+        - application: sosialhjelp-wonderwall-mock
+        - application: sosialhjelp-texas-mock
+        - application: sosialhjelp-innsyn-api-mock
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
   resources:
     limits:
       cpu: "1"
@@ -25,7 +35,9 @@ spec:
     path: /sosialhjelp/idporten-mock/isalive
   replicas:
     min: 1
-    max: 2
+    max: 1
   env:
     - name: JSON_CONFIG_PATH
       value: "/app/config.json"
+    - name: LOG_LEVEL
+      value: "DEBUG"
