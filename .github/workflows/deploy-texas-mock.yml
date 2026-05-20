@@ -1,0 +1,27 @@
+name: 'Deploy texas-mock'
+run-name: Deploying texas ${{ github.ref_name }} to dev
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'nais/mock/texas.yml'
+    branches:
+      - main
+jobs:
+  deploy-gcp:
+    name: 'Deploy to development'
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Deploy til dev'
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          RESOURCE: nais/mock/texas.yml
+          CLUSTER: dev-gcp
+          REF: ${{ github.sha }}
+          PRINT_PAYLOAD: true

@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teamdigisos
 spec:
-  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:2026-03-05-140609-319938a
+  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest
   port: 8080
   ingresses:
     - "https://www.ekstern.dev.nav.no/sosialhjelp/wonderwall"

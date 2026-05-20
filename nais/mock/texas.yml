@@ -22,6 +22,7 @@ spec:
         - application: sosialhjelp-soknad-api-mock
         - application: sosialhjelp-modia-api-mock
         - application: sosialhjelp-upload-mock
+        - application: sosialhjelp-innsyn-mock
     outbound:
       rules:
         - application: sosialhjelp-idporten-mock
