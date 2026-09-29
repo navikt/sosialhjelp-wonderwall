@@ -7,6 +7,9 @@ on:
   push:
     paths:
       - 'nais/mock/idporten-mock.yml'
+      - 'nais/mock/Dockerfile'
+      - 'nais/mock/config.json'
+      - 'nais/mock/login.html'
     branches:
       - main
 jobs:
