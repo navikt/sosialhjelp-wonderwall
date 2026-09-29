@@ -6,7 +6,9 @@ metadata:
   labels:
     team: teamdigisos
 spec:
-  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:2026-08-14-123343-d0fccc8
+  # Tag + digest: digest bestemmer hvilket image som kjøres (reproduserbart).
+  # :latest er kun ankerpunktet digestabot bruker for å oppdage nye bygg – ikke fjern den.
+  image: europe-north1-docker.pkg.dev/nais-io/nais/images/wonderwall:latest@sha256:5a4010f0067e6d9d55c75d15b76558f15ad8b5abcd987ed9f63ea3ab7949279b
   port: 8080
   ingresses:
     - "https://www.ekstern.dev.nav.no/sosialhjelp/wonderwall"
