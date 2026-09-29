@@ -1,0 +1,52 @@
+name: "Digestabot – dry-run (FASE 1, midlertidig)"
+
+# FASE 1: verifiserer kun at digestabot finner riktig fil og riktig ny digest.
+# Den oppretter INGEN PR, merger ingenting og deployer ingenting.
+#
+# Push-triggeren under er midlertidig: schedule/workflow_dispatch leses kun fra
+# default branch (main), så det er eneste måten å teste fra denne branchen på.
+# Begge fjernes når fase 2 tas i bruk.
+
+on:
+  push:
+    branches:
+      - DSOS-735_Sikkerhet-Automatisk-pull-av-nytt-image-for-wonderwall
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dry-run:
+    name: "Sjekk digest uten å endre noe"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+
+      - uses: navikt/digestabot@3302a753e533ceb9ec216de7f78345436cd636e3 # v1.2
+        id: digestabot
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          working-dir: nais
+          create-pr: false
+
+      # Fasit på to ting vi ikke kunne verifisere på forhånd:
+      #   1. hvilke filer/digester digestabot faktisk plukker opp
+      #   2. hva som ligger igjen i arbeidstreet etterpå (avgjør om fase 2
+      #      trenger "git checkout origin/main -- ." før deploy)
+      - name: "Inspiser resultat"
+        env:
+          DIGESTABOT_JSON: ${{ steps.digestabot.outputs.json }}
+          DIGESTABOT_CHANGED: ${{ steps.digestabot.outputs.changed_files }}
+        run: |
+          echo "=== outputs.json ==="
+          echo "$DIGESTABOT_JSON"
+          echo "=== outputs.changed_files ==="
+          echo "$DIGESTABOT_CHANGED"
+          echo "=== git diff (arbeidstre) ==="
+          git --no-pager diff --stat
+          git --no-pager diff
+          echo "=== image-linjer på disk ==="
+          grep -n "image:" nais/*/wonderwall.yml
