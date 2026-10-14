@@ -22,7 +22,7 @@ jobs:
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build and push docker image to GAR
         uses: nais/docker-build-push@v0
@@ -39,7 +39,7 @@ jobs:
     needs: build-image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: 'Deploy til dev'
         uses: nais/deploy/actions/deploy@v2
         env:
