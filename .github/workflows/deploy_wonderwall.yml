@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - main
+      - DSOS-735_Sikkerhet-Automatisk-pull-av-nytt-image-for-wonderwall_del2 # MIDLERTIDIG: kun for test, fjernes før merge
     paths:
       - 'nais/*/wonderwall.yml'
 
@@ -20,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env: [ mock, preprod, prod ]
+        env: [ mock, preprod ] # MIDLERTIDIG: prod fjernet under test
     permissions:
       contents: read
       id-token: write
